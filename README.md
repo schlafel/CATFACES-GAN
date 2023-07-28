@@ -37,8 +37,8 @@ To get started with CATFACES-GAN, follow these steps:
 
 - Clone the repository: git clone https://github.com/schlafel/CATFACES-GAN.git
 - Install the required dependencies: pip install -r requirements.txt
-- Download the cat faces dataset (more details in the Dataset section).
-- Train the GAN model (more details in the Training section).
+- Download the cat faces dataset (more details in the [Dataset](#dataset) section).
+- Train the GAN model (more details in the [Training](#training) section).
 - Generate cat faces using the trained model (more details in the Generated Samples section).
 
 

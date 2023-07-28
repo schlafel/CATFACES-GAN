@@ -7,16 +7,16 @@ This project is based on the seminal paper on Generative Adversarial Networks by
 
 
 # Table of Contents
-- [Introduction](#Introduction)
-- [GAN Architecture](#Gan Architecture)
-- [Getting Started]()
-- [Dataset]()
-- [Training]()
-- [Generated Samples]()
-- [Evaluation]()
-- [Future Improvements]()
-- [Contributing]()
-- [License]()
+- [Introduction](#introduction)
+- [GAN Architecture](#gan-architecture)
+- [Getting Started](#Getting-Started)
+- [Dataset](#Dataset)
+- [Training](#training)
+- [Generated Samples](#generated-samples)
+- [Evaluation](#evaluation)
+- [Future Improvements](#future-improvements)
+- [Contributing](#contributing)
+- [License](#license)
 
 
 
@@ -56,19 +56,22 @@ python src\train.py
 ````
 
 
-Generated Samples
+# Generated Samples
 Once the model is trained, you can generate synthetic cat faces using the following command:
 
 Copy code
 ````python
 python src\generate.py
 ````
-The generated cat faces will be saved.
+The generated cat faces will be saved. The result looks as follows:
 
-Evaluation
-Evaluating GANs can be a challenging task. Visual inspection of generated samples is a common approach to assessing the quality of the model's output. Additionally, you can use quantitative metrics like Inception Score, Frechet Inception Distance (FID), or Perceptual Path Length (PPL) to evaluate the model's performance further.
+![Generated Cat Faces](https://github.com/schlafel/CATFACES-GAN/raw/main/media/DCGAN_CATFACES.gif)
 
-Future Improvements
+# Evaluation
+Evaluating GANs can be a challenging task. Visual inspection of generated samples is a common approach to assessing the quality of the model's output. 
+Additionally, you can use quantitative metrics like Inception Score, Frechet Inception Distance (FID), or Perceptual Path Length (PPL) to evaluate the model's performance further.
+
+# Future Improvements
 CATFACES-GAN is a simple GAN implementation to generate cat faces, but there are several ways to improve its performance and output quality. Some potential future improvements include:
 
 - Implementing more advanced GAN architectures like DCGAN, StyleGAN, or BigGAN.

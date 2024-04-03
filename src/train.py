@@ -163,7 +163,7 @@ discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
 
 # Notice the use of `tf.function`
 # This annotation causes the function to be "compiled".
-@tf.function
+# tf.function
 def train_step(images):
     # Train Discriminator with real labels
     with tf.GradientTape() as disc_tape1:
@@ -195,11 +195,13 @@ def train_step(images):
                                                 discriminator.trainable_variables))
     # Train Generator with real labels
     with tf.GradientTape() as gen_tape:
+        # Generate Fake images
+        generated_images = generator(noise, training=True)
         fake_output = discriminator(generated_images, training=True)
         real_targets = tf.ones_like(fake_output)
         gen_loss = generator_loss(real_targets, fake_output)
 
-    # gradient calculation for generator for real labels
+        # gradient calculation for generator for real labels
     gradients_of_gen = gen_tape.gradient(gen_loss, generator.trainable_variables)
 
     # parameters optimization for generator for real labels
@@ -246,7 +248,7 @@ def train(dataset, epochs):
         if (epoch + 1) % 15 == 0:
             checkpoint.save(file_prefix = checkpoint_prefix)
 
-
+    generator.save("./../models/cat_model.pb")
     return l_out
 
 
@@ -256,9 +258,10 @@ if __name__ == '__main__':
     latent_size = 100
     N_EPOCHS = 100
 
-    cats_dir  = pathlib.Path('/data/cats')
+    cats_dir  = pathlib.Path(r'C:\Users\fs.GUNDP\Python\CATFACES-GAN\data\cats')
     #Load the cat data....
-    cat_ds = load_catData(batch_size= batch_size)
+    cat_ds = load_catData(batch_size= batch_size,
+                          data_dir=cats_dir)
 
 
     #show some of the cute cats
@@ -295,7 +298,7 @@ if __name__ == '__main__':
     # to visualize progress in the animated GIF)
     seed = tf.random.normal([num_examples_to_generate,1,1, latent_size])
 
-    checkpoint_dir = './training_checkpoints_cats'
+    checkpoint_dir = './../models'
     checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
     checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                      discriminator_optimizer=discriminator_optimizer,

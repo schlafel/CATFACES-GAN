@@ -1,3 +1,5 @@
+import os.path
+
 from matplotlib import pyplot as plt
 
 
@@ -19,6 +21,7 @@ def save_images(predicted_image, epoch = None):
       plt.imshow((predicted_image[i, :, :, :].numpy() * 127.5 + 127.5).astype(int))
       plt.axis('off')
   plt.tight_layout()
-
-  plt.savefig('./catimages/image_at_epoch_{:04d}.png'.format(epoch))
+  if not os.path.exists("./../catimages"):
+      os.makedirs("./../catimages")
+  plt.savefig('./../catimages/image_at_epoch_{:04d}.png'.format(epoch))
   plt.close(fig=fig)

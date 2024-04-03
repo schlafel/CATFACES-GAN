@@ -6,13 +6,20 @@ import tensorflow as tf
 
 st.title('Cat-Faces')
 
+#load model, set cache to prevent reloading
+@st.cache_resource()
+def load_model():
+    model=tf.keras.models.load_model('models/cat_model')
+    return model
+
+
+with st.spinner("Loading Model...."):
+    model=load_model()
 
 
 
-
-
-model_path = r".\models\cat_model"
-new_model = tf.keras.models.load_model(model_path)
+# model_path = r".\models\cat_model"
+# new_model = tf.keras.models.load_model(model_path)
 
 
 
@@ -29,7 +36,7 @@ with col1:
              )
 
 
-gen_image = new_model.predict(tf.reshape(img,(1,1,1,100)))
+gen_image = model.predict(tf.reshape(img,(1,1,1,100)))
 with col2:
     st.image(gen_image[0],
              caption="Genrierte Katze",

@@ -36,9 +36,14 @@ with col1:
              )
 
 
-gen_image = model.predict(tf.reshape(img,(1,1,1,100)))
+
 with col2:
-    st.image(gen_image[0],
+    with st.spinner("Generating Image"):
+        gen_image = model.predict(tf.reshape(img, (1, 1, 1, 100)))
+
+        img = (gen_image[0, :, :, :] * 127.5 + 127.5)/256.
+
+    st.image(img,
              caption="Genrierte Katze",
-             clamp=True,
+             clamp=False,
              use_column_width=True)

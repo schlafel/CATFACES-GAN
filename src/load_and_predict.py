@@ -9,10 +9,6 @@ if __name__ == '__main__':
     generator = build_generator(latent_size=latent_size)
     checkpoint_dir = r"./../models"
     model_path = r"C:\Users\fs.GUNDP\Python\CATFACES-GAN\models\cat_model.pb"
-    os.listdir(checkpoint_dir)
-    latest = tf.train.latest_checkpoint(checkpoint_dir)
-    # generator = generator.load_weights(model_path)
-
     new_model = tf.keras.models.load_model(model_path)
 
     noise = tf.random.normal([1, 1, 1, latent_size])

@@ -2,46 +2,36 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
-st.title('Uber pickups in NYC')
+st.title('Cat-Faces')
 
-DATE_COLUMN = 'date/time'
-DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
-            'streamlit-demo-data/uber-raw-data-sep14.csv.gz')
 
-@st.cache_data
-def load_data(nrows):
-    data = pd.read_csv(DATA_URL, nrows=nrows)
-    lowercase = lambda x: str(x).lower()
-    data.rename(lowercase, axis='columns', inplace=True)
-    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
-    return data
 
-data_load_state = st.text('Loading data...')
-data = load_data(10000)
-data_load_state.text("Done! (using st.cache_data)")
 
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(data)
 
-st.subheader('Number of pickups by hour')
-hist_values = np.histogram(data[DATE_COLUMN].dt.hour, bins=24, range=(0,24))[0]
-st.bar_chart(hist_values)
 
-# Some number in the range 0-23
-hour_to_filter = st.slider('hour', 0, 23, 17)
-filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
+model_path = r".\models\cat_model"
+new_model = tf.keras.models.load_model(model_path)
 
-st.subheader('Map of all pickups at %s:00' % hour_to_filter)
-st.map(filtered_data)
+
+
 st.header("Cat-Faces - Generator")
 st.button("Generate Random image")
-st.image(np.random.random((64,64,1)),
-         caption="Random image",
-         width=400)
 
-img_in = plt.imread("./src/cats3x3.png")
-st.image(img_in,
-         caption="Random image",
-         width=400)
+img = tf.random.normal((1,10,10,1))
+col1, col2 = st.columns(2,)
+with col1:
+    st.image(img.numpy()[0],
+             caption="Random image",
+             clamp=True,
+             use_column_width=True
+             )
+
+
+gen_image = new_model.predict(tf.reshape(img,(1,1,1,100)))
+with col2:
+    st.image(gen_image[0],
+             caption="Genrierte Katze",
+             clamp=True,
+             use_column_width=True)
